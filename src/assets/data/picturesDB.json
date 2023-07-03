@@ -1,0 +1,13 @@
+{
+    "pictures": [{
+            "id": 0,
+            "author": "Alejandro Escamilla",
+            "download_url": "https://picsum.photos/id/0/5000/3333"
+        },
+        {
+            "id": 17,
+            "author": "Paul Jarvis",
+            "download_url": "https://picsum.photos/id/17/2500/1667"
+        }
+    ]
+}
