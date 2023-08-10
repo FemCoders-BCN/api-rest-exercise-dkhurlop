@@ -1,6 +1,17 @@
 
-  img {
-    max-width: 90%;
-    height: auto;
-    margin-top: 20px;
-  }
+
+.images-container {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+.imagelist{
+  border: 1px solid #ccc;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+}

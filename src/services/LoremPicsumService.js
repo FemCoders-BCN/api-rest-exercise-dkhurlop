@@ -10,7 +10,7 @@ export const LoremPicsumService = () => {
   //Los endpoints que tienen llaves con un texto dentro, quiere decir que le has de pasar algún valor /id/{image}/{size}, eso significa que image y size son valores que te dirá la documentación cómo se pasan.
   const urlGetById = '/id/{image}/{size}';
   /* Construye la url para el tercer endpoint */
-  const urlGetGrayscale = '/{size}?grayscale';
+  const urlGetGrayscale = 'https://picsum.photos/200/300?grayscale';
 
   const getAll = () => {
     const response = axios.get(urlGetAll);
@@ -18,7 +18,7 @@ export const LoremPicsumService = () => {
   };
   
   const getById = (id, size) => {
-    const response = axios.get(`${urlGetById}/${id}/${size}`);
+    const response = axios.get(`${urlGetById.replace('{image}', id).replace('{size}', size)}`);
     return response;
   }; 
   // const getById = async (id, size) => {
@@ -31,14 +31,13 @@ export const LoremPicsumService = () => {
   // };
 
   const getRandomGrayscale = (size) => {
-    const response = axios.get(`${urlGetGrayscale}/${size}`);
+    const response = axios.get(`${urlGetGrayscale.replace('{size}', size)}`);
     return response;
-  }; 
+  };
 
   return {
     getAll,
     getById,
     getRandomGrayscale
-    //Deberás retornar el método para que puedas exportarlo
   }
 }

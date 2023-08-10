@@ -10,7 +10,7 @@ function PicturesPage() {
   useEffect(() => {
     async function fetchImages() {
       try {
-        const service = LoremPicsumService(); // Llamada como función, no como constructor
+        const service = LoremPicsumService();
         const response = await service.getAll();
         setImageList(response.data);
       } catch (error) {
@@ -25,14 +25,17 @@ function PicturesPage() {
     <main>
       <h2>Aquí estarán todos los objetos de la primera llamada</h2>
       <Navbar />
-      <ul>
+      <ul className='images-container'>
         {imageList.map((image) => (
-          <PictureObject key={image.id} image={image} />
-        ))};
+          <li className="imagelist" key={image.id}>
+            <PictureObject image={image} />
+          </li>
+        ))}
       </ul>
     </main>
   );
 }
 
 export default PicturesPage;
+
 

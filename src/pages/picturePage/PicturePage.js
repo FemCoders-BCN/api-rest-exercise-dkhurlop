@@ -1,38 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
-import PictureObject from '../../components/pictureObject/PictureObject';
 import { LoremPicsumService } from '../../services/LoremPicsumService';
 
-function PicturePage() {
-  const { imageId } = useParams();
-  const [imageData, setImageData] = useState(null);
+function PicturesPage() {
+  const [imageId, setImageId] = useState('');
+  const [image, setImage] = useState('');
 
-  useEffect(() => {
-    async function fetchImage() {
-      try {
-        const service = LoremPicsumService();
-        const response = await service.getById(imageId, '400');
-        setImageData(response.data);
-      } catch (error) {
-        console.error('Error fetching image:', error);
-      }
+  const handleSearch = () => {
+    if (imageId) {
+      const service = LoremPicsumService();
+      service.getById(imageId, '400')
+        .then(response => {
+          const imageUrl = `https://picsum.photos/id/${imageId}/400`;
+          setImage(imageUrl);
+        })
+        .catch(error => {
+          console.error('Error al buscar imagen:', error);
+        });
     }
-
-    fetchImage();
-  }, [imageId]);
+  };
 
   return (
     <main>
-      <h2>Aquí estará la imagen de la segunda llamada</h2>
+      <h2>Buscar imagen por ID</h2>
       <Navbar />
-      {imageData && (
-        <div>
-          <PictureObject image={imageData} />
+      <div>
+        <input
+          type="number"
+          placeholder="Ingrese un ID"
+          value={imageId}
+          onChange={(e) => setImageId(e.target.value)}
+        />
+        <button onClick={handleSearch}>Buscar Imagen</button>
+      </div>
+      {image && (
+        <div className='image-container'>
+          <h3>ID: {image.id}</h3>
+          <p>Autor: {image.author}</p>
+          <img src={`https://picsum.photos/id/${imageId}/400`} alt={`Imagen por ID ${imageId}`} />
         </div>
       )}
     </main>
   );
 }
 
-export default PicturePage;
+export default PicturesPage;
