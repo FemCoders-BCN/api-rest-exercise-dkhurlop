@@ -1,35 +1,35 @@
+// FavoritesPage.js
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
-import { FavoriteService } from '../../services/FavoritesService';
 import PictureObject from '../../components/pictureObject/PictureObject';
-import EditFavoriteForm from '../../components/EditFavoriteForm/EditFavoriteForm'; // Importa el componente EditFavoriteForm
-import DeleteFavoriteButton from '../../components/deleteFavoriteButton/DeleteFavoriteButton'; // Importa el componente DeleteFavoriteButton
+import DeleteFavoriteButton from '../../components/deleteFavoriteButton/DeleteFavoriteButton';
+import './FavoritesPage.css'; // Agrega estilos aquí si es necesario
 import AddFavoriteForm from '../../components/addFavoriteForm/addFavoriteForm';
+import EditFavoriteForm from '../../components/EditFavoriteForm/EditFavoriteForm';
+import { FavoriteService } from '../../services/FavoritesService';
 
 function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
-
+ 
   useEffect(() => {
-    async function fetchFavorites() {
-      try {
-        const service = FavoriteService();
-        const response = await service.getAllFavorites();
-        setFavorites(response.data.pictures); // Accede a la propiedad "pictures" en los datos
-      } catch (error) {
-        console.error('Error fetching favorites:', error);
-      }
-    }
+    const favoriteService = FavoriteService();
 
-    fetchFavorites();
+    favoriteService.getAll()
+      .then(response => {
+        setFavorites(response.data);
+      })
+      .catch(error => {
+        console.error('Error al buscar favoritos', error);
+      });
   }, []);
 
   const handleAddFavorite = (newFavorite) => {
     setFavorites([...favorites, newFavorite]);
   };
 
-  const handleUpdateFavorite = (favoriteId, updatedFavorite) => {
+  const handleUpdateFavorite = (updatedFavorite) => {
     const updatedFavorites = favorites.map((favorite) =>
-      favorite.id === favoriteId ? updatedFavorite : favorite
+      favorite.id === updatedFavorite.id ? updatedFavorite : favorite
     );
     setFavorites(updatedFavorites);
   };
@@ -47,8 +47,8 @@ function FavoritesPage() {
       <Navbar />
       <AddFavoriteForm onAdd={handleAddFavorite} />
       <ul className='favorites-container'>
-        {favorites.map((favorite) => (
-          <li className='favorite-item' key={favorite.id}>
+        {favorites.map((favorite, index) => (
+          <li className='favorite-item' key={index}>
             <PictureObject image={favorite} />
             <EditFavoriteForm
               favorite={favorite}
@@ -56,7 +56,7 @@ function FavoritesPage() {
             />
             <DeleteFavoriteButton
               favoriteId={favorite.id}
-              onDelete={handleDeleteFavorite}
+              onDelete={() => handleDeleteFavorite(favorite.id)}
             />
           </li>
         ))}
@@ -66,4 +66,3 @@ function FavoritesPage() {
 }
 
 export default FavoritesPage;
-

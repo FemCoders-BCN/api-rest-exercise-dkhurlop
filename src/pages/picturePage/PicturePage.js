@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import { LoremPicsumService } from '../../services/LoremPicsumService';
+import './PicturePage.css';
 
 function PicturesPage() {
   const [imageId, setImageId] = useState('');
@@ -35,8 +36,6 @@ function PicturesPage() {
       </div>
       {image && (
         <div className='image-container'>
-          <h3>ID: {image.id}</h3>
-          <p>Autor: {image.author}</p>
           <img src={`https://picsum.photos/id/${imageId}/400`} alt={`Imagen por ID ${imageId}`} />
         </div>
       )}

@@ -1,0 +1,25 @@
+.favorites-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .favorite-card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .favorite-details {
+    margin-top: 10px;
+  }
+  
+  .favorite-details p {
+    margin: 5px 0;
+  }
+  
+  .favorite-details strong {
+    font-weight: bold;
+  }
+  

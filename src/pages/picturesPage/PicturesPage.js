@@ -26,8 +26,8 @@ function PicturesPage() {
       <h2>Aquí estarán todos los objetos de la primera llamada</h2>
       <Navbar />
       <ul className='images-container'>
-        {imageList.map((image) => (
-          <li className="imagelist" key={image.id}>
+        {imageList.map((image, index) => (
+          <li className="imagelist" key={index}>
             <PictureObject image={image} />
           </li>
         ))}

@@ -31,7 +31,7 @@ export const LoremPicsumService = () => {
   // };
 
   const getRandomGrayscale = (size) => {
-    const response = axios.get(`${urlGetGrayscale.replace('{size}', size)}`);
+    const response = axios.get(urlGetGrayscale);
     return response;
   };
 

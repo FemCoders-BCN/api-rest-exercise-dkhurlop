@@ -1,43 +1,37 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000'; // Cambia la URL a la de tu servidor json-server
+// axios.defaults.baseURL = 'http://localhost:5000'; // Cambia la URL según la configuración de tu servidor JSON
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Accept'] = 'application/json';
 
-export const FavoriteService = {
-  getAllFavorites: async () => {
-    try {
-      const response = await axios.get('/favorites');
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
+export const FavoriteService = () => {
+  const urlPictures = 'http://localhost:5000/pictures'; // Cambia la ruta según la estructura de tu servidor
 
-  createFavorite: async (favoriteData) => {
-    try {
-      const response = await axios.post('/favorites', favoriteData);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
+  const getAll = () => {
+    return axios.get(urlPictures);
+  };
 
-  updateFavorite: async (favoriteId, favoriteData) => {
-    try {
-      const response = await axios.put(`/favorites/${favoriteId}`, favoriteData);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  },
+  const getById = (id) => {
+    return axios.get(`${urlPictures}/${id}`);
+  };
 
-  deleteFavorite: async (favoriteId) => {
-    try {
-      const response = await axios.delete(`/favorites/${favoriteId}`);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
+  const create = (data) => {
+    return axios.post(urlPictures, data);
+  };
+
+  const update = (id, data) => {
+    return axios.put(`${urlPictures}/${id}`, data);
+  };
+
+  const remove = (id) => {
+    return axios.delete(`${urlPictures}/${id}`);
+  };
+
+  return {
+    getAll,
+    getById,
+    create,
+    update,
+    remove,
+  };
 };
